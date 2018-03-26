@@ -19,6 +19,9 @@ class ItemCell: UITableViewCell {
         titleLbl.text = item.title
         priceLbl.text = "$\(item.price)"
         detailsLbl.text = item.details
+        if let image = item.toImage?.image as? UIImage {
+            thumb.image = image
+        }
     }
 
 }
