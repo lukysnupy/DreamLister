@@ -22,9 +22,12 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, NSFe
         tableView.delegate = self
         tableView.dataSource = self
         
-        //generateTestData()
-        
         attemptFetch()
+        
+        if let sections = controller.sections, sections[0].numberOfObjects == 0 {
+            generateTestData()
+            attemptFetch()
+        }
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

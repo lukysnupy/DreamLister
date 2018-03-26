@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class ItemDetailsVC: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class ItemDetailsVC: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
     
     @IBOutlet weak var storePicker: UIPickerView!
     @IBOutlet weak var titleField: CustomTextField!
@@ -33,21 +33,10 @@ class ItemDetailsVC: UIViewController, UIPickerViewDataSource, UIPickerViewDeleg
         
         imagePicker = UIImagePickerController()
         imagePicker.delegate = self
-       
-//        let store = Store(context: context)
-//        store.name = "Amazon"
-//        let store2 = Store(context: context)
-//        store2.name = "Ebay"
-//        let store3 = Store(context: context)
-//        store3.name = "Alza"
-//        let store4 = Store(context: context)
-//        store4.name = "AliExpress"
-//        let store5 = Store(context: context)
-//        store5.name = "Tesla Dealership"
-//        let store6 = Store(context: context)
-//        store6.name = "iSTYLE"
-//
-//        ad.saveContext()
+        
+        titleField.delegate = self
+        priceField.delegate = self
+        detailsField.delegate = self
         
         getStores()
         
@@ -80,6 +69,25 @@ class ItemDetailsVC: UIViewController, UIPickerViewDataSource, UIPickerViewDeleg
             self.storePicker.reloadAllComponents()
         } catch let error as NSError {
             print("\(error)")
+        }
+        
+        if self.stores.count == 0 {
+            let store = Store(context: context)
+            store.name = "Amazon"
+            let store2 = Store(context: context)
+            store2.name = "Ebay"
+            let store3 = Store(context: context)
+            store3.name = "Alza"
+            let store4 = Store(context: context)
+            store4.name = "AliExpress"
+            let store5 = Store(context: context)
+            store5.name = "Tesla Dealership"
+            let store6 = Store(context: context)
+            store6.name = "iSTYLE"
+            
+            ad.saveContext()
+
+            getStores()
         }
     }
     
@@ -157,6 +165,11 @@ class ItemDetailsVC: UIViewController, UIPickerViewDataSource, UIPickerViewDeleg
         }
         
         imagePicker.dismiss(animated: true, completion: nil)
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return true
     }
     
 }
